@@ -10,31 +10,49 @@ A Model Context Protocol (MCP) server for Plex media management, enabling AI ass
 - **Recent Additions**: Track newly added content
 - **Extensible Architecture**: Easy to add TV shows and other media types
 
+## Requirements
+
+- Python 3.8 or higher
+- Plex Media Server with accessible API
+- Network access to your Plex server
+
 ## Setup
 
 ### Quick Setup (Recommended)
 
 ```bash
-# Run the setup script
+# Clone the repository
+git clone https://github.com/richarddas/plex_mcp_server.git
+cd plex_mcp_server
+
+# Run the setup script (creates venv and installs dependencies)
 ./setup.sh
 
 # Edit your Plex details
 nano .env
 
-# Start the server
+# Activate virtual environment and start the server
+source venv/bin/activate
 python main.py
 ```
 
 ### Manual Setup
 
-1. **Install dependencies**:
+1. **Create and activate virtual environment**:
 
    ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   pip install --upgrade pip
    pip install -r requirements.txt
    ```
 
-2. **Configure environment variables**:
-   Copy the example environment file and configure it:
+3. **Configure environment variables**:
 
    ```bash
    cp .env.example .env
@@ -48,10 +66,21 @@ python main.py
    - `HOST` and `PORT`: Server binding (defaults are fine for most setups)
    - `LOG_LEVEL`: Logging verbosity (INFO recommended)
 
-3. **Run the server**:
+4. **Run the server**:
    ```bash
    python main.py
    ```
+
+### Daily Usage
+
+After initial setup, to run the server:
+
+```bash
+cd plex-mcp-server
+source venv/bin/activate  # Activate virtual environment
+python main.py            # Start server
+# When done: deactivate   # Exit virtual environment
+```
 
 ## Claude Desktop Configuration
 
