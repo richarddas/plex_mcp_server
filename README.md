@@ -12,6 +12,21 @@ A Model Context Protocol (MCP) server for Plex media management, enabling AI ass
 
 ## Setup
 
+### Quick Setup (Recommended)
+
+```bash
+# Run the setup script
+./setup.sh
+
+# Edit your Plex details
+nano .env
+
+# Start the server
+python main.py
+```
+
+### Manual Setup
+
 1. **Install dependencies**:
 
    ```bash
