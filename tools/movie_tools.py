@@ -259,8 +259,10 @@ class MovieTools:
     def get_recent_movies(limit: int = 10) -> Dict[str, Any]:
         """Get recently added movies"""
         try:
-            recent = plex_client.server.library.recentlyAdded(libtype='movie', maxresults=limit)
+            section = plex_client.get_movie_library()
+            recent = section.recentlyAdded(maxresults=limit)
             movies = []
+            
             for movie in recent:
                 movies.append({
                     "title": movie.title,
@@ -270,6 +272,7 @@ class MovieTools:
                     "directors": [d.tag for d in getattr(movie, 'directors', [])],
                     "summary": MovieTools._truncate_summary(getattr(movie, 'summary', ''))
                 })
+            
             return {"recent_movies": movies}
         except Exception as e:
             logger.error(f"Error getting recent movies: {e}")
