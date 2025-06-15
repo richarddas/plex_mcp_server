@@ -32,6 +32,11 @@ class MCPHandler:
             'get_all_directors': self.movie_tools.get_all_directors,
             'get_recent_movies': self.movie_tools.get_recent_movies,
             'get_library_stats': self.movie_tools.get_library_stats,
+            'get_movie_details': self.movie_tools.get_movie_details,
+            'search_by_actor': self.movie_tools.search_by_actor,
+            'find_similar_by_metadata': self.movie_tools.find_similar_by_metadata,
+            'search_multi_criteria': self.movie_tools.search_multi_criteria,
+            'get_genre_combinations': self.movie_tools.get_genre_combinations,
         }
         self.tools.update(movie_methods)
         
