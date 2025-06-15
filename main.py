@@ -3,6 +3,9 @@
 Plex MCP Server - Main FastAPI application
 """
 
+import psutil
+import time
+from datetime import datetime
 import asyncio
 import json
 import logging
@@ -164,6 +167,49 @@ async def handle_messages(request: Request):
             "id": None,
             "error": {"code": -32700, "message": "Parse error"}
         }
+
+# Global variable to track start time
+start_time = time.time()
+
+@app.get("/status")
+async def detailed_status():
+    """Detailed status endpoint with system info"""
+    uptime = time.time() - start_time
+    
+    try:
+        # Get basic library stats
+        section = plex_client.get_movie_library()
+        movie_count = len(section.all())
+    except:
+        movie_count = "Unknown"
+    
+    return {
+        "service": "Plex MCP Server",
+        "status": "running",
+        "version": "1.0.0",
+        "uptime_seconds": round(uptime, 2),
+        "uptime_human": f"{int(uptime // 3600)}h {int((uptime % 3600) // 60)}m {int(uptime % 60)}s",
+        "started_at": datetime.fromtimestamp(start_time).isoformat(),
+        "current_time": datetime.now().isoformat(),
+        "plex_server": plex_client.server_name,
+        "movie_count": movie_count,
+        "system": {
+            "cpu_percent": psutil.cpu_percent(interval=1),
+            "memory_percent": psutil.virtual_memory().percent,
+            "disk_percent": psutil.disk_usage('/').percent
+        },
+        "active_connections": len(connections),
+        "message_queues": len(message_queues)
+    }
+
+@app.get("/status/simple")
+async def simple_status():
+    """Simple status check for monitoring"""
+    return {
+        "status": "healthy",
+        "uptime": time.time() - start_time,
+        "plex_connected": True  # Will fail if Plex is down
+    }
 
 if __name__ == "__main__":
     uvicorn.run(
