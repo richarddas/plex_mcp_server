@@ -19,15 +19,19 @@ A Model Context Protocol (MCP) server for Plex media management, enabling AI ass
    ```
 
 2. **Configure environment variables**:
-   Create a `.env` file:
+   Copy the example environment file and configure it:
 
+   ```bash
+   cp .env.example .env
+   nano .env
    ```
-   PLEX_URL=http://your-plex-server:32400
-   PLEX_TOKEN=your-plex-token
-   HOST=0.0.0.0
-   PORT=8000
-   LOG_LEVEL=INFO
-   ```
+
+   Update the values in `.env`:
+
+   - `PLEX_URL`: Your Plex server URL (e.g., `http://192.168.1.100:32400`)
+   - `PLEX_TOKEN`: Your Plex authentication token ([How to find it](https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/))
+   - `HOST` and `PORT`: Server binding (defaults are fine for most setups)
+   - `LOG_LEVEL`: Logging verbosity (INFO recommended)
 
 3. **Run the server**:
    ```bash
